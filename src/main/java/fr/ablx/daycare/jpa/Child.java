@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fr.ablx.daycare.deserializable.ChildDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
-import fr.ablx.daycare.serializable.DayCareSerializer;
 import fr.ablx.daycare.serializable.ParentsSerializer;
 import lombok.*;
 

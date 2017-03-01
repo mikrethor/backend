@@ -2,7 +2,6 @@ package fr.ablx.daycare.jpa;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import fr.ablx.daycare.deserializable.ChildDeserializer;
 import fr.ablx.daycare.deserializable.ParentDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
 import lombok.*;
@@ -18,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonDeserialize(using = ParentDeserializer.class)
-public class Parent {
+public class Parent extends Element{
 
     @Id
     @GeneratedValue(generator = "idParentGenerator", strategy = GenerationType.SEQUENCE)

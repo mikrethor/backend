@@ -6,35 +6,54 @@ import fr.ablx.daycare.jpa.ParentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ParentController {
+public class ParentController extends AbstractController<Parent> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     ParentRepository parentRepo;
 
-    @RequestMapping("/daycares/{idDaycare}/parents/{idParent}")
-    public Parent getParent(@PathVariable Long idDaycare, @PathVariable Long idParent) {
 
-        return parentRepo.findParentByIdAndDaycare(idDaycare, idParent);
+    @Override
+    public CrudRepository<Parent, Long> getRepository() {
+        return parentRepo;
+    }
+
+    @Override
+    public Logger getLogger() {
+        return logger;
+    }
+
+    @RequestMapping("/daycares/{idDaycare}/parents/{idParent}")
+    public Parent getElementById(Long idParent) {
+        return super.getElementById(idParent);
+    }
+
+    @RequestMapping("/daycares/{idDaycare}/parents")
+    public List<Parent> getAllElements() {
+        return super.getAllElements();
+    }
+
+    @DeleteMapping("/daycares/{idDaycare}/parents/{idParent}")
+    public void delete(@PathVariable Long idParent) throws DayCareException {
+        super.delete(idParent);
+    }
+
+    @DeleteMapping("/daycares/{idDaycare}/parents/")
+    public void deleteAll() throws DayCareException {
+       super.deleteAll();
     }
 
 
     @PostMapping("/daycares/{idDaycare}/parents")
-    public ResponseEntity<?> createParent(@PathVariable("idDaycare") Long idDaycare, @RequestBody Parent parent) throws DayCareException {
-        try {
-            parent = parentRepo.save(parent);
-            HttpHeaders responseHeaders = new HttpHeaders();
-            return new ResponseEntity<>(parent, responseHeaders, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error when creating daycare!", e);
-            return ResponseEntity.noContent().build();
-        }
+    public ResponseEntity<?> create(@RequestBody Parent parent) throws DayCareException {
+       return super.create(parent);
     }
 }

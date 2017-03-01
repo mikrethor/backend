@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ChildController {
+public class ChildController extends MainController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

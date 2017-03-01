@@ -16,7 +16,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class EducatorController {
+public class EducatorController extends MainController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -56,7 +56,7 @@ public class EducatorController {
             HttpHeaders responseHeaders = new HttpHeaders();
             return new ResponseEntity<>(educator, responseHeaders, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error when creating daycare!", e);
+            logger.error("Error when creating educator!", e);
             return ResponseEntity.noContent().build();
         }
     }

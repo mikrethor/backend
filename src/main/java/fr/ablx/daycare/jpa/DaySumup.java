@@ -2,7 +2,6 @@ package fr.ablx.daycare.jpa;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fr.ablx.daycare.serializable.ChildSerializer;
-import fr.ablx.daycare.serializable.EducatorSerializer;
 import lombok.*;
 
 import javax.persistence.*;

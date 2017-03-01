@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonSerialize(using = DayCareSerializer.class)
-public class Daycare implements Serializable {
+public class Daycare extends Element implements Serializable {
 
 	/**
 	 * SerialUID.

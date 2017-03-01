@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class SumupController {
+public class SumupController extends MainController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -59,18 +59,14 @@ public class SumupController {
             HttpHeaders responseHeaders = new HttpHeaders();
             return new ResponseEntity<>(sumup, responseHeaders, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error when creating daycare!", e);
+            logger.error("Error when creating sumup!", e);
             return ResponseEntity.noContent().build();
         }
     }
 
-
-
-
-
-
-    @RequestMapping("/sumup")
-    public DaySumup sumup() {
-        return sumupRepo.findOne(1L);
+    @RequestMapping("/daycares/{idDaycare}/childs/{idChild}/sumups/{idSumup}")
+    public DaySumup getSumup(@PathVariable("idSumup") Long idSumup) {
+        return sumupRepo.findOne(idSumup);
     }
+
 }

@@ -2,7 +2,6 @@ package fr.ablx.daycare.jpa;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import fr.ablx.daycare.deserializable.ChildDeserializer;
 import fr.ablx.daycare.deserializable.EducatorDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
 import lombok.*;
