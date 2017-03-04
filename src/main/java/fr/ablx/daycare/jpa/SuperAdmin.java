@@ -18,9 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * Created by Thor on 2016-11-21.
- */
+
 @Entity
 @Table(name = "SUPER_ADMIN")
 @Getter

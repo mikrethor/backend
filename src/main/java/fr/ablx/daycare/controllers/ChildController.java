@@ -32,7 +32,7 @@ public class ChildController extends MainController {
     public List<Child> getChildren(@PathVariable Long id) {
         List<Child> children = new ArrayList<>();
 
-        childRepo.findAll().forEach(entity -> children.add(entity));
+        childRepo.findAll().forEach(children::add);
 
         return children;
     }

@@ -13,32 +13,29 @@ import java.io.Serializable;
 @Table(name = "EDUCATOR")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonDeserialize(using = EducatorDeserializer.class)
-public class Educator implements Serializable {
+public class Educator extends Person implements Serializable {
 
-	/**
-	 * SerialUID.
-	 */
-	private static final long serialVersionUID = 992392713980195304L;
+    /**
+     * SerialUID.
+     */
+    private static final long serialVersionUID = 992392713980195304L;
 
-	@Id
-	@GeneratedValue(generator = "idEducatorGenerator", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "idEducatorGenerator", sequenceName = "SEQ_ID_EDUCATOR", allocationSize = 1)
-	@Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
-	private Long id;
+    @Id
+    @GeneratedValue(generator = "idEducatorGenerator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "idEducatorGenerator", sequenceName = "SEQ_ID_EDUCATOR", allocationSize = 1)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
+    private Long id;
 
-	@NonNull
-	private String firstName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
+    @JsonSerialize(using = DayCareIdSerializer.class)
+    private Daycare daycare;
 
-	@NonNull
-	private String lastName;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
-	@JsonSerialize(using = DayCareIdSerializer.class)
-	private Daycare daycare;
+    public Educator(String firstName, String lastName) {
+        super(firstName, lastName);
+    }
 
 }

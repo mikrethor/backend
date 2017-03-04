@@ -15,30 +15,21 @@ import java.util.List;
 @Table(name = "CHILD")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-//@ToString
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @JsonDeserialize(using = ChildDeserializer.class)
-public class Child implements Serializable {
+public class Child extends Person implements Serializable {
 
     /**
-	 * SerialUID.
-	 */
-	private static final long serialVersionUID = 8842875141622051229L;
+     * SerialUID.
+     */
+    private static final long serialVersionUID = 8842875141622051229L;
 
-	@Id
+    @Id
     @GeneratedValue(generator = "idChildGenerator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "idChildGenerator", sequenceName = "SEQ_ID_CHILD", allocationSize = 1)
     @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
     private Long id;
 
-    @NonNull
-    private String firstName;
-
-    @NonNull
-    private String lastName;
-
-    // lien parents
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DaySumup> daySumups;
@@ -50,14 +41,18 @@ public class Child implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name="CHILD_PARENT",
-            joinColumns=@JoinColumn(name="CHILD_ID", referencedColumnName="ID"),
-            inverseJoinColumns=@JoinColumn(name="PARENT_ID", referencedColumnName="ID"))
+            name = "CHILD_PARENT",
+            joinColumns = @JoinColumn(name = "CHILD_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID"))
     @JsonSerialize(using = ParentsSerializer.class)
     private List<Parent> parents;
 
     @Override
     public String toString() {
-        return String.format("id:%s, firstName:%s, lastName:%s",id,firstName,lastName);
+        return String.format("id:%s, firstName:%s, lastName:%s", id, getFirstName(), getLastName());
+    }
+
+    public Child(String firstName, String lastName) {
+        super(firstName, lastName);
     }
 }

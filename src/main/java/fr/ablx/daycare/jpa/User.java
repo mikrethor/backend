@@ -50,4 +50,6 @@ public class User implements Serializable {
 	@NonNull
 	private Daycare daycare;
 
+	//Ajouter courriel
+
 }

@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * Created by Thor on 2016-11-17.
- */
 public class ChildDeserializer extends JsonDeserializer<Child> {
     @Autowired
     DayCareRepository dayCareRepo;

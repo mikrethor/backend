@@ -28,7 +28,7 @@ public class EducatorController extends MainController {
     public List<Educator> getEducators(@PathVariable Long id) {
         List<Educator> educators = new ArrayList<>();
 
-        educatorRepo.findAll().forEach(entity -> educators.add(entity));
+        educatorRepo.findAll().forEach(educators::add);
 
         return educators;
     }

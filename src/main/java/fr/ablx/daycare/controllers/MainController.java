@@ -22,13 +22,13 @@ public class MainController {
     @ExceptionHandler({DayCareException.class})
     public void handleException(HttpServletRequest request, HttpServletResponse response, DayCareException te)
             throws IOException {
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
         errors.add(te.getMessage());
         logger.error(te.getMessage(), te);
         DefaultErrorMessage dem = new DefaultErrorMessage("001", "Erreur", errors);
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = "nope";
-        List<DefaultErrorMessage> dems = new ArrayList<DefaultErrorMessage>();
+        List<DefaultErrorMessage> dems = new ArrayList<>();
         dems.add(dem);
         try {
             json = ow.writeValueAsString(dems);

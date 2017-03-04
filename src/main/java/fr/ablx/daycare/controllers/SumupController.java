@@ -5,8 +5,7 @@ import fr.ablx.daycare.jpa.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class SumupController extends MainController {
+public class SumupController extends AbstractController<DaySumup> {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -54,14 +53,7 @@ public class SumupController extends MainController {
 
     @PostMapping("/daycares/{idDaycare}/childs/{idChild}/sumups")
     public ResponseEntity<?> createSumups(@PathVariable("idDaycare") Long idDaycare, @PathVariable("idChild") Long idChild, @RequestBody DaySumup sumup) throws DayCareException {
-        try {
-            sumup = sumupRepo.save(sumup);
-            HttpHeaders responseHeaders = new HttpHeaders();
-            return new ResponseEntity<>(sumup, responseHeaders, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error when creating sumup!", e);
-            return ResponseEntity.noContent().build();
-        }
+        return super.create(sumup);
     }
 
     @RequestMapping("/daycares/{idDaycare}/childs/{idChild}/sumups/{idSumup}")
@@ -69,4 +61,13 @@ public class SumupController extends MainController {
         return sumupRepo.findOne(idSumup);
     }
 
+    @Override
+    public CrudRepository<DaySumup, Long> getRepository() {
+        return sumupRepo;
+    }
+
+    @Override
+    public Logger getLogger() {
+        return logger;
+    }
 }

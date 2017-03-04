@@ -13,23 +13,17 @@ import java.util.List;
 @Table(name = "PARENT")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+//@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonDeserialize(using = ParentDeserializer.class)
-public class Parent extends Element{
+public class Parent extends Person implements Element {
 
     @Id
     @GeneratedValue(generator = "idParentGenerator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "idParentGenerator", sequenceName = "SEQ_ID_PARENT", allocationSize = 1)
     @Column(name = "ID", unique = true, nullable = false, precision = 18)
     private Long id;
-
-    @NonNull
-    private String firstName;
-
-    @NonNull
-    private String lastName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
@@ -42,4 +36,8 @@ public class Parent extends Element{
             inverseJoinColumns = @JoinColumn(name = "CHILD_ID", referencedColumnName = "ID"),
             joinColumns = @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID"))
     private List<Child> children;
+
+    public Parent(String firstName, String lastName) {
+        super(firstName, lastName);
+    }
 }

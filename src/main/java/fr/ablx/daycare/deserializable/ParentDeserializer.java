@@ -6,17 +6,12 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import fr.ablx.daycare.jpa.Child;
 import fr.ablx.daycare.jpa.DayCareRepository;
 import fr.ablx.daycare.jpa.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-/**
- * Created by Thor on 2016-11-17.
- */
 public class ParentDeserializer extends JsonDeserializer<Parent> {
     @Autowired
     DayCareRepository dayCareRepo;

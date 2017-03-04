@@ -14,34 +14,34 @@ import java.util.Date;
 @ToString
 @Getter
 @Setter
-public class DaySumup implements Serializable {
+public class DaySumup implements Serializable, Element {
 
-	/**
-	 * SerialUID.
-	 */
-	private static final long serialVersionUID = 2014532075056534270L;
+    /**
+     * SerialUID.
+     */
+    private static final long serialVersionUID = 2014532075056534270L;
 
-	@Id
-	@GeneratedValue(generator = "idDaySumupGenerator", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "idDaySumupGenerator", sequenceName = "SEQ_ID_DAY_SUMUP", allocationSize = 1)
-	@Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
-	private Long id;
+    @Id
+    @GeneratedValue(generator = "idDaySumupGenerator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "idDaySumupGenerator", sequenceName = "SEQ_ID_DAY_SUMUP", allocationSize = 1)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_CHILD", referencedColumnName = "ID")
-	@JsonSerialize(using = ChildSerializer.class)
-	private Child child;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CHILD", referencedColumnName = "ID")
+    @JsonSerialize(using = ChildSerializer.class)
+    private Child child;
 
-	@Enumerated(EnumType.STRING)
-	private Mood mood;
+    @Enumerated(EnumType.STRING)
+    private Mood mood;
 
-	@Enumerated(EnumType.STRING)
-	private Sleep sleep;
+    @Enumerated(EnumType.STRING)
+    private Sleep sleep;
 
-	@Enumerated(EnumType.STRING)
-	private Appetite appetite;
+    @Enumerated(EnumType.STRING)
+    private Appetite appetite;
 
-	private String comment;
+    private String comment;
 
-	private Date day;
+    private Date day;
 }

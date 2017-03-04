@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class DefaultErrorMessage {
 	private String code;
 	private String status;
-	private List<String> errors = new ArrayList<String>();
+	private List<String> errors = new ArrayList<>();
 
 	public DefaultErrorMessage(String code, String status, String error) {
 		this.code = code;

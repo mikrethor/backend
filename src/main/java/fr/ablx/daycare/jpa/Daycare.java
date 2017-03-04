@@ -17,37 +17,37 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonSerialize(using = DayCareSerializer.class)
-public class Daycare extends Element implements Serializable {
+public class Daycare implements Serializable, Element {
 
-	/**
-	 * SerialUID.
-	 */
-	private static final long serialVersionUID = -3357967634404224531L;
+    /**
+     * SerialUID.
+     */
+    private static final long serialVersionUID = -3357967634404224531L;
 
-	@Id
-	@GeneratedValue(generator = "idDayCareGenerator", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "idDayCareGenerator", sequenceName = "SEQ_ID_DAYCARE", allocationSize = 1)
-	@Column(name = "ID", unique = true, nullable = false, precision = 18)
-	@JsonView(View.Summary.class)
-	private Long id;
+    @Id
+    @GeneratedValue(generator = "idDayCareGenerator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "idDayCareGenerator", sequenceName = "SEQ_ID_DAYCARE", allocationSize = 1)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18)
+    @JsonView(View.Summary.class)
+    private Long id;
 
-	@NonNull
-	@JsonView(View.Summary.class)
-	private String name;
+    @NonNull
+    @JsonView(View.Summary.class)
+    private String name;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "daycare", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Child> children;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "daycare", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Child> children;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "daycare", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Educator> educators;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "daycare", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Educator> educators;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "daycare", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Parent> parents;
-	public static class View {
-		interface Summary {}
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "daycare", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Parent> parents;
 
-
+    public static class View {
+        interface Summary {
+        }
+    }
 
 
 }

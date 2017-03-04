@@ -7,9 +7,6 @@ import fr.ablx.daycare.jpa.Child;
 
 import java.io.IOException;
 
-/**
- * Created by Thor on 2016-11-17.
- */
 public class ChildSerializer extends JsonSerializer<Child> {
 
     @Override

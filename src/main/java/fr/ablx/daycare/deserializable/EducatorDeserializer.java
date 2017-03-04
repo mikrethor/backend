@@ -8,14 +8,10 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import fr.ablx.daycare.jpa.DayCareRepository;
 import fr.ablx.daycare.jpa.Educator;
-import fr.ablx.daycare.jpa.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-/**
- * Created by Thor on 2016-11-17.
- */
 public class EducatorDeserializer extends JsonDeserializer<Educator> {
     @Autowired
     DayCareRepository dayCareRepo;

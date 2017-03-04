@@ -8,9 +8,6 @@ import fr.ablx.daycare.jpa.Parent;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by Thor on 2016-11-17.
- */
 public class ParentsSerializer extends JsonSerializer<List<Parent>> {
 
     @Override

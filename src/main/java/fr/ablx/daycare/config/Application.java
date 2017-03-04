@@ -154,11 +154,11 @@ public class Application {
             daySumup2 = daySumupRepository.save(daySumup2);
 
 
-            List<DaySumup> sumupsArthur = new ArrayList<DaySumup>();
+            List<DaySumup> sumupsArthur = new ArrayList<>();
 
             sumupsArthur.add(daySumup1);
 
-            List<DaySumup> sumupsLouis = new ArrayList<DaySumup>();
+            List<DaySumup> sumupsLouis = new ArrayList<>();
 
             sumupsLouis.add(daySumup2);
             arthur.setDaySumups(sumupsArthur);
