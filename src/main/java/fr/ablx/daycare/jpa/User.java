@@ -33,23 +33,31 @@ import lombok.ToString;
 @ToString
 public class User implements Serializable {
 
-	/**
-	 * SerialUID.
-	 */
-	private static final long serialVersionUID = 5260341139379272302L;
+    /**
+     * SerialUID.
+     */
+    private static final long serialVersionUID = 5260341139379272302L;
 
-	@Id
-	@GeneratedValue(generator = "idUserGenerator", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "idUserGenerator", sequenceName = "SEQ_ID_USER", allocationSize = 1)
-	@Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
-	private Long id;
+    @Id
+    @GeneratedValue(generator = "idUserGenerator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "idUserGenerator", sequenceName = "SEQ_ID_USER", allocationSize = 1)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
-	@JsonSerialize(using = DayCareIdSerializer.class)
-	@NonNull
-	private Daycare daycare;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
+    @JsonSerialize(using = DayCareIdSerializer.class)
+    @NonNull
+    private Daycare daycare;
 
-	//Ajouter courriel
+    @NonNull
+    private String login;
+
+    @NonNull
+    private String password;
+
+    @NonNull
+    private String salt;
+
 
 }

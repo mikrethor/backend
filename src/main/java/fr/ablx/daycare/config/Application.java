@@ -1,6 +1,7 @@
 package fr.ablx.daycare.config;
 
 import fr.ablx.daycare.controllers.AppErrorController;
+import fr.ablx.daycare.crypto.CryptoUtils;
 import fr.ablx.daycare.jpa.*;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
@@ -19,6 +20,9 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
+import java.security.CryptoPrimitive;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,7 +101,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository, EducatorRepository educatorRepository, ParentRepository parentRepository, DayCareRepository dayCareRepository) {
+    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository, EducatorRepository educatorRepository, ParentRepository parentRepository, DayCareRepository dayCareRepository, UserRepository userRepository) {
         return (args) -> {
 
             Daycare daycare = new Daycare("Ma garderie");
@@ -109,7 +113,6 @@ public class Application {
 
             arthur.setDaycare(daycare);
             louis.setDaycare(daycare);
-
 
 
             Educator educ1 = new Educator("Marie-Josée", "YMCA");
@@ -125,8 +128,6 @@ public class Application {
             educ3 = educatorRepository.save(educ3);
 
 
-
-
             DaySumup daySumup1 = new DaySumup();
             daySumup1.setMood(Mood.BAD);
             daySumup1.setSleep(Sleep.GOOD);
@@ -134,7 +135,7 @@ public class Application {
             daySumup1.setComment("Best day ever Arthur");
             daySumup1.setDay(new Date());
             daySumup1.setChild(arthur);
-          //  daySumup1.setEducator(educ1);
+            //  daySumup1.setEducator(educ1);
 
 
             DaySumup daySumup2 = new DaySumup();
@@ -143,7 +144,7 @@ public class Application {
             daySumup2.setAppetite(Appetite.GOOD);
             daySumup2.setComment("Best day ever Louis");
             daySumup2.setDay(new Date());
-         //   daySumup2.setEducator(educ2);
+            //   daySumup2.setEducator(educ2);
             daySumup2.setChild(louis);
 
 
@@ -170,7 +171,7 @@ public class Application {
             Parent parent1 = new Parent("Xavier", "Bouclet");
             Parent parent2 = new Parent("Bérengère", "Bouclet");
 
-            List<Child> enfants=new ArrayList<>();
+            List<Child> enfants = new ArrayList<>();
 
             enfants.add(arthur);
             enfants.add(louis);
@@ -184,8 +185,30 @@ public class Application {
             parent1 = parentRepository.save(parent1);
             parent2 = parentRepository.save(parent2);
 
+            SecureRandom random = new SecureRandom();
+            byte bytes[] = new byte[20];
+            random.nextBytes(bytes);
+
+            System.out.println("fdfd:" + new String(bytes));
 
 
+            String password = "test";
+            String salt = CryptoUtils.getInstance().getSalt(20);
+            String encryptedString = CryptoUtils.getInstance().encryption(password, salt);
+
+
+            User user = new User(daycare, "mikrethor@gmail.com", encryptedString, salt);
+
+            userRepository.save(user);
+
+            User user2 = userRepository.findOne(Long.valueOf(1));
+
+            String passwordFromBd = user2.getPassword();
+            String saltFromBd = user2.getSalt();
+
+
+            String encryptedString2 = CryptoUtils.getInstance().encryption(password, saltFromBd);
+            System.out.println("dddd :" + encryptedString2.equals(passwordFromBd));
         };
     }
 
