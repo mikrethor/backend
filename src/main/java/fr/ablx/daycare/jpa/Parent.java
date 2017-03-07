@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fr.ablx.daycare.deserializable.ParentDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
+import fr.ablx.daycare.serializable.DayCareSerializer;
+import fr.ablx.daycare.serializable.ParentSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,6 +19,7 @@ import java.util.List;
 //@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonDeserialize(using = ParentDeserializer.class)
+@JsonSerialize(using = ParentSerializer.class)
 public class Parent extends Person implements Element {
 
     @Id

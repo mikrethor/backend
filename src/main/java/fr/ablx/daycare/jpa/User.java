@@ -2,20 +2,14 @@ package fr.ablx.daycare.jpa;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import fr.ablx.daycare.deserializable.ChildDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
+import fr.ablx.daycare.serializable.UserSerializer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +25,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
+@JsonSerialize(using = UserSerializer.class)
 public class User implements Serializable {
 
     /**
@@ -41,7 +36,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "idUserGenerator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "idUserGenerator", sequenceName = "SEQ_ID_USER", allocationSize = 1)
-    @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,6 +53,18 @@ public class User implements Serializable {
 
     @NonNull
     private String salt;
+
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="EDUCATOR_ID")
+    private Educator educator;
+
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="PARENT_ID")
+    private Parent parent;
+
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="ADMIN_ID")
+    private Admin admin;
 
 
 }

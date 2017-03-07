@@ -76,7 +76,7 @@ public class Application {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setPersistenceUnitName("puMoteurAttribution");
         em.setDataSource(datasource);
-        em.setPackagesToScan(new String[]{"fr.ablx.daycare.jpa"});
+        em.setPackagesToScan("fr.ablx.daycare.jpa");
         em.setJpaVendorAdapter(jpaVendorAdapter);
         em.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 
@@ -123,9 +123,9 @@ public class Application {
             educ2.setDaycare(daycare);
             educ3.setDaycare(daycare);
 
-            educ1 = educatorRepository.save(educ1);
-            educ2 = educatorRepository.save(educ2);
-            educ3 = educatorRepository.save(educ3);
+            educatorRepository.save(educ1);
+            educatorRepository.save(educ2);
+            educatorRepository.save(educ3);
 
 
             DaySumup daySumup1 = new DaySumup();
@@ -135,7 +135,6 @@ public class Application {
             daySumup1.setComment("Best day ever Arthur");
             daySumup1.setDay(new Date());
             daySumup1.setChild(arthur);
-            //  daySumup1.setEducator(educ1);
 
 
             DaySumup daySumup2 = new DaySumup();
@@ -144,7 +143,7 @@ public class Application {
             daySumup2.setAppetite(Appetite.GOOD);
             daySumup2.setComment("Best day ever Louis");
             daySumup2.setDay(new Date());
-            //   daySumup2.setEducator(educ2);
+
             daySumup2.setChild(louis);
 
 
@@ -183,7 +182,7 @@ public class Application {
             parent2.setDaycare(daycare);
 
             parent1 = parentRepository.save(parent1);
-            parent2 = parentRepository.save(parent2);
+            parentRepository.save(parent2);
 
             SecureRandom random = new SecureRandom();
             byte bytes[] = new byte[20];
@@ -198,17 +197,12 @@ public class Application {
 
 
             User user = new User(daycare, "mikrethor@gmail.com", encryptedString, salt);
-
+            user.setParent(parent1);
             userRepository.save(user);
 
             User user2 = userRepository.findOne(Long.valueOf(1));
 
-            String passwordFromBd = user2.getPassword();
-            String saltFromBd = user2.getSalt();
 
-
-            String encryptedString2 = CryptoUtils.getInstance().encryption(password, saltFromBd);
-            System.out.println("dddd :" + encryptedString2.equals(passwordFromBd));
         };
     }
 
