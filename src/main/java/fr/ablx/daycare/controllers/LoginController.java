@@ -3,6 +3,7 @@ package fr.ablx.daycare.controllers;
 import fr.ablx.daycare.errors.DayCareException;
 import fr.ablx.daycare.jpa.User;
 import fr.ablx.daycare.jpa.UserRepository;
+import fr.ablx.daycare.objects.Credentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,23 @@ public class LoginController extends MainController {
     private UserRepository userRepository;
 
     @PostMapping("/login")
-    public User login(@RequestBody String login) throws DayCareException {
+    public User login(@RequestBody Credentials credentials) throws DayCareException {
+        User user = userRepository.findUserByLogin(credentials.getLogin());
+//TODO check password and send back token
+        if (user == null) {
+            throw new DayCareException(String.format("Login %s not found", credentials.getLogin()));
+        }
 
-
-//TODO search user by login
-        logger.info("Login : {}", login);
-        return userRepository.findOne(1L);
+        return user;
     }
 
     @PostMapping("/logout")
-    public Boolean logout(@RequestBody String logout) throws DayCareException {
+    public Boolean logout(@RequestBody String login) throws DayCareException {
 
-        logger.info("Logout : {}", logout);
-//        return true;
+        logger.info("Logout : {}", login);
+
         throw new DayCareException("TEST JSON");
     }
+
+
 }
