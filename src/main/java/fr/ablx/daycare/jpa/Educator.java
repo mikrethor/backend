@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fr.ablx.daycare.deserializable.EducatorDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
+import fr.ablx.daycare.serializable.EducatorSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonDeserialize(using = EducatorDeserializer.class)
+@JsonSerialize(using = EducatorSerializer.class)
 public class Educator extends Person implements Serializable {
 
     /**
@@ -26,7 +28,7 @@ public class Educator extends Person implements Serializable {
     @Id
     @GeneratedValue(generator = "idEducatorGenerator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "idEducatorGenerator", sequenceName = "SEQ_ID_EDUCATOR", allocationSize = 1)
-    @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

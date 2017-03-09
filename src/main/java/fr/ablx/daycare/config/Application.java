@@ -101,7 +101,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository, EducatorRepository educatorRepository, ParentRepository parentRepository, DayCareRepository dayCareRepository, UserRepository userRepository) {
+    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository, EducatorRepository educatorRepository, ParentRepository parentRepository, DayCareRepository dayCareRepository, UserRepository userRepository,AdminRepository adminRepository) {
         return (args) -> {
 
             Daycare daycare = new Daycare("Ma garderie");
@@ -198,6 +198,17 @@ public class Application {
 
             User user = new User(daycare, "mikrethor@gmail.com", encryptedString, salt);
             user.setParent(parent1);
+            userRepository.save(user);
+
+            user = new User(daycare, "test@test1", encryptedString, salt);
+            user.setEducator(educ3);
+            userRepository.save(user);
+
+
+            Admin admin1=adminRepository.save(new Admin());
+
+            user = new User(daycare, "test@test2", encryptedString, salt);
+            user.setAdmin(admin1);
             userRepository.save(user);
 
             User user2 = userRepository.findOne(Long.valueOf(1));

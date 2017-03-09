@@ -18,7 +18,7 @@ public class ParentController extends AbstractController<Parent> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    ParentRepository parentRepo;
+    private ParentRepository parentRepo;
 
 
     @Override
@@ -32,7 +32,7 @@ public class ParentController extends AbstractController<Parent> {
     }
 
     @RequestMapping("/daycares/{idDaycare}/parents/{idParent}")
-    public Parent getElementById(Long idParent) {
+    public Parent getElementById(@PathVariable Long idParent) {
         return super.getElementById(idParent);
     }
 
@@ -48,12 +48,12 @@ public class ParentController extends AbstractController<Parent> {
 
     @DeleteMapping("/daycares/{idDaycare}/parents/")
     public void deleteAll() throws DayCareException {
-       super.deleteAll();
+        super.deleteAll();
     }
 
 
     @PostMapping("/daycares/{idDaycare}/parents")
     public ResponseEntity<?> create(@RequestBody Parent parent) throws DayCareException {
-       return super.create(parent);
+        return super.create(parent);
     }
 }

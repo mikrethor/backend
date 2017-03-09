@@ -18,22 +18,22 @@ public class SumupController extends AbstractController<DaySumup> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    DaySumupRepository sumupRepo;
+    private DaySumupRepository sumupRepo;
 
     @RequestMapping("/daycares/{idDaycare}/childs/{idChild}/sumups")
     public List<DaySumup> getSumups(@PathVariable Long idDaycare, @PathVariable Long idChild) {
 
-        List<DaySumup> sumups = sumupRepo.findSumupByChildAndDaycare(idDaycare, idChild);
 
-        return sumups;
+
+        return sumupRepo.findSumupByChildAndDaycare(idDaycare, idChild);
     }
 
-    @RequestMapping("/daycares/{idDaycare}/childs/{idChild}/sumups/{sumupDay}")
+    @RequestMapping("/daycares/{idDaycare}/childs/{idChild}/sumups/day/{sumupDay}")
     public DaySumup getSumup(@PathVariable Long idDaycare, @PathVariable Long idChild, @PathVariable String sumupDay) {
 
-        DaySumup sumups = sumupRepo.findOne(1l);
 
-        return sumups;
+
+        return sumupRepo.findOne(1L);
     }
 
     @RequestMapping("/moods")
