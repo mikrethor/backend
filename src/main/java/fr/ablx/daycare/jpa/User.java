@@ -22,7 +22,7 @@ import lombok.ToString;
 @Table(name = "USER")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonSerialize(using = UserSerializer.class)
