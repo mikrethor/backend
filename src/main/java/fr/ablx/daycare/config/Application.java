@@ -1,5 +1,6 @@
 package fr.ablx.daycare.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.ablx.daycare.controllers.AppErrorController;
 import fr.ablx.daycare.crypto.CryptoUtils;
 import fr.ablx.daycare.jpa.*;
@@ -101,7 +102,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository, EducatorRepository educatorRepository, ParentRepository parentRepository, DayCareRepository dayCareRepository, UserRepository userRepository,AdminRepository adminRepository) {
+    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository, EducatorRepository educatorRepository, ParentRepository parentRepository, DayCareRepository dayCareRepository, UserRepository userRepository, AdminRepository adminRepository) {
         return (args) -> {
 
             Daycare daycare = new Daycare("Ma garderie");
@@ -205,7 +206,7 @@ public class Application {
             userRepository.save(user);
 
 
-            Admin admin1=adminRepository.save(new Admin());
+            Admin admin1 = adminRepository.save(new Admin());
 
             user = new User(daycare, "test@test2", encryptedString, salt);
             user.setAdmin(admin1);
@@ -215,6 +216,13 @@ public class Application {
 
 
         };
+    }
+
+    @Bean
+    public ObjectMapper mapperJsonObject() {
+
+
+        return new ObjectMapper();
     }
 
 }
