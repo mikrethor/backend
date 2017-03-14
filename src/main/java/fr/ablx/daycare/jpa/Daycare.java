@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "DAYCARE")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonSerialize(using = DayCareSerializer.class)

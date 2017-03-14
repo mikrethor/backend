@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import fr.ablx.daycare.deserializable.ChildDeserializer;
+import fr.ablx.daycare.deserializable.UserDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
 import fr.ablx.daycare.serializable.UserSerializer;
 import lombok.AccessLevel;
@@ -26,6 +27,7 @@ import lombok.ToString;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @JsonSerialize(using = UserSerializer.class)
+@JsonDeserialize(using = UserDeserializer.class)
 public class User implements Serializable {
 
     /**
