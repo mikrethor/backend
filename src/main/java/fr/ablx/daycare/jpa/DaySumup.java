@@ -24,7 +24,7 @@ public class DaySumup implements Serializable, Element {
     @Id
     @GeneratedValue(generator = "idDaySumupGenerator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "idDaySumupGenerator", sequenceName = "SEQ_ID_DAY_SUMUP", allocationSize = 1)
-    @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

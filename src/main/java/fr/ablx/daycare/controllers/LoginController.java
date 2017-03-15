@@ -25,7 +25,7 @@ public class LoginController extends MainController {
     @PostMapping("/login")
     public User login(@RequestBody Credentials credentials) throws DayCareException {
         User user = userRepository.findUserByLogin(credentials.getLogin());
-//TODO check password and send back token
+        // TODO check password and send back token
         if (user == null) {
             throw new DayCareException(String.format("Login %s not found", credentials.getLogin()));
         }
@@ -40,6 +40,5 @@ public class LoginController extends MainController {
 
         throw new DayCareException("TEST JSON");
     }
-
 
 }

@@ -23,10 +23,10 @@ public class ChildController extends MainController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    ChildRepository childRepo;
+    private ChildRepository childRepo;
 
     @Autowired
-    ParentRepository parentRepo;
+    private ParentRepository parentRepo;
 
     @RequestMapping("/daycares/{id}/childs")
     public List<Child> getChildren(@PathVariable Long id) {
@@ -54,5 +54,16 @@ public class ChildController extends MainController {
             logger.error("Error when creating daycare!", e);
             return ResponseEntity.noContent().build();
         }
+    }
+
+    @DeleteMapping("/daycares/{idDaycare}/childs/{idChild}")
+    public Boolean deleteChild(@PathVariable Long idDaycare, @PathVariable Long idChild) throws DayCareException {
+        try {
+            childRepo.delete(idChild);
+        } catch (Exception e) {
+            logger.error("Error when deleting child!", e);
+            throw new DayCareException("Error when deleting child with id " + idChild);
+        }
+        return Boolean.TRUE;
     }
 }

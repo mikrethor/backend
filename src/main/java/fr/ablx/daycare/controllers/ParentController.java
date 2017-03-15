@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +44,14 @@ public class ParentController extends AbstractController<Parent> {
     }
 
     @DeleteMapping("/daycares/{idDaycare}/parents/{idParent}")
-    public void delete(@PathVariable Long idParent) throws DayCareException {
-        super.delete(idParent);
+    public Boolean deleteParent(@PathVariable Long idDaycare, @PathVariable Long idParent) throws DayCareException {
+        try {
+            parentRepo.delete(idParent);
+        } catch (Exception e) {
+            logger.error("Error when creating educator!", e);
+            throw new DayCareException("Error when deleting parent with id " + idParent);
+        }
+        return Boolean.TRUE;
     }
 
     @DeleteMapping("/daycares/{idDaycare}/parents/")
@@ -52,8 +60,20 @@ public class ParentController extends AbstractController<Parent> {
     }
 
 
+//    @PostMapping("/daycares/{idDaycare}/parents")
+//    public ResponseEntity<?> create(@RequestBody Parent parent) throws DayCareException {
+//        return super.create(parent);
+//    }
+
     @PostMapping("/daycares/{idDaycare}/parents")
-    public ResponseEntity<?> create(@RequestBody Parent parent) throws DayCareException {
-        return super.create(parent);
+    public ResponseEntity<?> createParent(@PathVariable("idDaycare") Long idDaycare, @RequestBody Parent parent) throws DayCareException {
+        try {
+            parent = parentRepo.save(parent);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            return new ResponseEntity<>(parent, responseHeaders, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error when creating educator!", e);
+            return ResponseEntity.noContent().build();
+        }
     }
 }

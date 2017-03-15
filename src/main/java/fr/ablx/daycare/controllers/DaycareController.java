@@ -19,7 +19,7 @@ public class DaycareController extends AbstractController<Daycare> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    DayCareRepository dayCareRepo;
+    private DayCareRepository dayCareRepo;
 
 
     @RequestMapping("/testError")

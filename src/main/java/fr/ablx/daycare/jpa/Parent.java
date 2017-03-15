@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fr.ablx.daycare.deserializable.ParentDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
-import fr.ablx.daycare.serializable.DayCareSerializer;
 import fr.ablx.daycare.serializable.ParentSerializer;
 import lombok.*;
 
@@ -29,7 +28,7 @@ public class Parent extends Person implements Element {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
+    @JoinColumn(name = "DAYCARE_ID", referencedColumnName = "ID")
     @JsonSerialize(using = DayCareIdSerializer.class)
     private Daycare daycare;
 

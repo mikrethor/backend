@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,15 +23,11 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
 @WebAppConfiguration
 public class LoginControllerTest {
     private MockMvc mockMvc;
-
-    @Autowired
-    private CommandLineRunner demo;
 
     @Autowired
     private WebApplicationContext wac;
@@ -42,7 +37,6 @@ public class LoginControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        demo.run();
         mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
@@ -55,22 +49,20 @@ public class LoginControllerTest {
     public void login() throws Exception {
 
         Credentials user = new Credentials();
-        user.setLogin("test@test2");
+        user.setLogin("test@parent");
         user.setPassword("test");
 
         String json = new Gson().toJson(user);
 
         ResultActions resultActions = mockMvc.perform(
-                post("/login")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json))
+                post("/login").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
         String result = resultActions.andReturn().getResponse().getContentAsString();
 
-
         User u = mapperJsonObject.readValue(result, User.class);
-        Assert.assertEquals("{\"id\":3,\"login\":\"test@test2\",\"daycareId\":1,\"educator\":null,\"parent\":null,\"admin\":1}", resultActions.andReturn().getResponse().getContentAsString());
+        Assert.assertEquals(
+                "{\"id\":1,\"login\":\"test@parent\",\"daycareId\":1,\"educator\":null,\"parent\":{\"id\":1,\"firstName\":\"Xavier\",\"lastName\":\"B\"},\"admin\":null}",
+                resultActions.andReturn().getResponse().getContentAsString());
     }
 
     @Test

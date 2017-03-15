@@ -22,7 +22,7 @@ public class EducatorController extends MainController {
 
 
     @Autowired
-    EducatorRepository educatorRepo;
+    private EducatorRepository educatorRepo;
 
     @RequestMapping("/daycares/{id}/educators")
     public List<Educator> getEducators(@PathVariable Long id) {
@@ -44,6 +44,7 @@ public class EducatorController extends MainController {
         try {
             educatorRepo.delete(idEducator);
         } catch (Exception e) {
+            logger.error("Error when creating educator!", e);
             throw new DayCareException("Error when deleting educator with id " + idEducator);
         }
         return Boolean.TRUE;

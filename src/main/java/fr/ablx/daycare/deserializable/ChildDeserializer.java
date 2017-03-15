@@ -1,7 +1,6 @@
 package fr.ablx.daycare.deserializable;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -15,10 +14,10 @@ import java.util.ArrayList;
 
 public class ChildDeserializer extends JsonDeserializer<Child> {
     @Autowired
-    DayCareRepository dayCareRepo;
+    private DayCareRepository dayCareRepo;
 
     @Override
-    public Child deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public Child deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
 
@@ -27,8 +26,6 @@ public class ChildDeserializer extends JsonDeserializer<Child> {
         if (null != daycareNode) {
             Long daycareId = daycareNode.asLong();
             child.setDaycare(dayCareRepo.findOne(daycareId));
-        } else {
-
         }
         child.setDaySumups(new ArrayList<>());
         child.setParents(new ArrayList<>());

@@ -32,7 +32,7 @@ public class Educator extends Person implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
+    @JoinColumn(name = "DAYCARE_ID", referencedColumnName = "ID")
     @JsonSerialize(using = DayCareIdSerializer.class)
     private Daycare daycare;
 

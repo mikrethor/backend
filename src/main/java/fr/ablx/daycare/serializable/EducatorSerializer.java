@@ -14,7 +14,19 @@ public class EducatorSerializer extends JsonSerializer<Educator> {
         if (educator == null) {
             jsonGenerator.writeNull();
         } else {
-            jsonGenerator.writeNumber(educator.getId());
+
+
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeObjectField("id", educator.getId());
+
+
+            jsonGenerator.writeObjectField("firstName", educator.getFirstName());
+
+            jsonGenerator.writeObjectField("lastName", educator.getLastName());
+
+
+            jsonGenerator.writeEndObject();
+            
         }
     }
 }

@@ -14,7 +14,18 @@ public class ChildSerializer extends JsonSerializer<Child> {
         if (child == null) {
             jsonGenerator.writeNull();
         } else {
-            jsonGenerator.writeNumber(child.getId());
+
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeObjectField("id", child.getId());
+
+
+            jsonGenerator.writeObjectField("firstName", child.getFirstName());
+
+            jsonGenerator.writeObjectField("lastName", child.getLastName());
+
+
+            jsonGenerator.writeEndObject();
+            
         }
     }
 }

@@ -21,8 +21,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
-import java.security.CryptoPrimitive;
-import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +42,7 @@ public class Application {
 
     // tag::entrypoint[]
     public static void main(String[] args) {
+        System.getProperties().put("server.port", 8081);
         SpringApplication.run(Application.class, args);
     }
 
@@ -102,32 +101,15 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository, EducatorRepository educatorRepository, ParentRepository parentRepository, DayCareRepository dayCareRepository, UserRepository userRepository, AdminRepository adminRepository) {
+    public CommandLineRunner demo(ChildRepository childRepository, DaySumupRepository daySumupRepository,
+                                  EducatorRepository educatorRepository, ParentRepository parentRepository,
+                                  DayCareRepository dayCareRepository, UserRepository userRepository, AdminRepository adminRepository) {
         return (args) -> {
 
-            Daycare daycare = new Daycare("Ma garderie");
-            daycare = dayCareRepository.save(daycare);
+            Daycare daycare = dayCareRepository.findOne(1L);
 
-            Child arthur = new Child("Arthur", "Bouclet");
-            Child louis = new Child("Louis", "Bouclet");
-
-
-            arthur.setDaycare(daycare);
-            louis.setDaycare(daycare);
-
-
-            Educator educ1 = new Educator("Marie-Josée", "YMCA");
-            Educator educ2 = new Educator("Bérengère", "Courtaux Bouclet");
-            Educator educ3 = new Educator("Joe", "Tribiani");
-
-            educ1.setDaycare(daycare);
-            educ2.setDaycare(daycare);
-            educ3.setDaycare(daycare);
-
-            educatorRepository.save(educ1);
-            educatorRepository.save(educ2);
-            educatorRepository.save(educ3);
-
+            Child louis = childRepository.findOne(2L);
+            Child arthur = childRepository.findOne(1L);
 
             DaySumup daySumup1 = new DaySumup();
             daySumup1.setMood(Mood.BAD);
@@ -136,7 +118,6 @@ public class Application {
             daySumup1.setComment("Best day ever Arthur");
             daySumup1.setDay(new Date());
             daySumup1.setChild(arthur);
-
 
             DaySumup daySumup2 = new DaySumup();
             daySumup2.setMood(Mood.BAD);
@@ -147,13 +128,8 @@ public class Application {
 
             daySumup2.setChild(louis);
 
-
-            louis = childRepository.save(louis);
-            arthur = childRepository.save(arthur);
-
             daySumup1 = daySumupRepository.save(daySumup1);
             daySumup2 = daySumupRepository.save(daySumup2);
-
 
             List<DaySumup> sumupsArthur = new ArrayList<>();
 
@@ -168,8 +144,8 @@ public class Application {
             arthur = childRepository.save(arthur);
             louis = childRepository.save(louis);
 
-            Parent parent1 = new Parent("Xavier", "Bouclet");
-            Parent parent2 = new Parent("Bérengère", "Bouclet");
+            Parent parent1 = parentRepository.findOne(1L);
+            Parent parent2 = parentRepository.findOne(2L);
 
             List<Child> enfants = new ArrayList<>();
 
@@ -182,45 +158,30 @@ public class Application {
             parent1.setDaycare(daycare);
             parent2.setDaycare(daycare);
 
-            parent1 = parentRepository.save(parent1);
+            parentRepository.save(parent1);
             parentRepository.save(parent2);
 
             SecureRandom random = new SecureRandom();
             byte bytes[] = new byte[20];
             random.nextBytes(bytes);
 
-            System.out.println("fdfd:" + new String(bytes));
-
-
             String password = "test";
             String salt = CryptoUtils.getInstance().getSalt(20);
             String encryptedString = CryptoUtils.getInstance().encryption(password, salt);
+            // Update les mots de passe de test lors du run
+            for (User u : userRepository.findAll()) {
+                u.setPassword(encryptedString);
+                u.setSalt(salt);
+                userRepository.save(u);
+            }
 
-
-            User user = new User(daycare, "mikrethor@gmail.com", encryptedString, salt);
-            user.setParent(parent1);
-            userRepository.save(user);
-
-            user = new User(daycare, "test@test1", encryptedString, salt);
-            user.setEducator(educ3);
-            userRepository.save(user);
-
-
-            Admin admin1 = adminRepository.save(new Admin());
-
-            user = new User(daycare, "test@test2", encryptedString, salt);
-            user.setAdmin(admin1);
-            userRepository.save(user);
-
-            User user2 = userRepository.findOne(Long.valueOf(1));
-
+            dayCareRepository.save(new Daycare("Ma garderie2"));
 
         };
     }
 
     @Bean
     public ObjectMapper mapperJsonObject() {
-
 
         return new ObjectMapper();
     }

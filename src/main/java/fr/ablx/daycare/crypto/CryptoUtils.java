@@ -1,14 +1,9 @@
 package fr.ablx.daycare.crypto;
 
-import fr.ablx.daycare.jpa.User;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-/**
- * Created by Thor on 2017-03-04.
- */
 public class CryptoUtils {
 
     private static CryptoUtils INSTANCE;
@@ -32,11 +27,8 @@ public class CryptoUtils {
     }
 
     public String encryption(String password, String salt) {
-
-
-        MessageDigest messageDigest = null;
         try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update((password + salt).getBytes());
             return new String(messageDigest.digest());
         } catch (NoSuchAlgorithmException e) {

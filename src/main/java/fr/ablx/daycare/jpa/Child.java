@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fr.ablx.daycare.deserializable.ChildDeserializer;
 import fr.ablx.daycare.serializable.DayCareIdSerializer;
 import fr.ablx.daycare.serializable.ParentsSerializer;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,7 +30,7 @@ public class Child extends Person implements Serializable {
     @Id
     @GeneratedValue(generator = "idChildGenerator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "idChildGenerator", sequenceName = "SEQ_ID_CHILD", allocationSize = 1)
-    @Column(name = "ID", unique = true, nullable = false, precision = 18, scale = 0)
+    @Column(name = "ID", unique = true, nullable = false, precision = 18)
     private Long id;
 
 
@@ -35,7 +38,7 @@ public class Child extends Person implements Serializable {
     private List<DaySumup> daySumups;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_DAYCARE", referencedColumnName = "ID")
+    @JoinColumn(name = "DAYCARE_ID", referencedColumnName = "ID")
     @JsonSerialize(using = DayCareIdSerializer.class)
     private Daycare daycare;
 
@@ -47,12 +50,12 @@ public class Child extends Person implements Serializable {
     @JsonSerialize(using = ParentsSerializer.class)
     private List<Parent> parents;
 
+    public Child(String firstName, String lastName) {
+        super(firstName, lastName);
+    }
+
     @Override
     public String toString() {
         return String.format("id:%s, firstName:%s, lastName:%s", id, getFirstName(), getLastName());
-    }
-
-    public Child(String firstName, String lastName) {
-        super(firstName, lastName);
     }
 }

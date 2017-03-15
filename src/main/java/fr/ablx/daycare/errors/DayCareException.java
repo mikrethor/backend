@@ -11,7 +11,7 @@ public class DayCareException extends Exception {
 	 */
 	private static final long serialVersionUID = -7020841972681326671L;
 
-	String message;
+	private String message;
 
 	public DayCareException(String message) {
 		this.message = message;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import fr.ablx.daycare.jpa.Admin;
-import fr.ablx.daycare.jpa.Parent;
 
 import java.io.IOException;
 

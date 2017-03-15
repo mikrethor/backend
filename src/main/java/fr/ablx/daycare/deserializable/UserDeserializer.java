@@ -1,19 +1,20 @@
 package fr.ablx.daycare.deserializable;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import fr.ablx.daycare.jpa.*;
+import fr.ablx.daycare.jpa.Admin;
+import fr.ablx.daycare.jpa.Daycare;
+import fr.ablx.daycare.jpa.User;
 
 import java.io.IOException;
 
 public class UserDeserializer extends JsonDeserializer<User> {
 
     @Override
-    public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
 
@@ -26,8 +27,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
             Daycare daycare = new Daycare();
             daycare.setId(daycareId);
             user.setDaycare(daycare);
-        } else {
-
         }
 
         JsonNode adminNode = node.get("admin");
@@ -36,8 +35,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
             Admin admin = new Admin();
             admin.setId(adminId);
             user.setAdmin(admin);
-        } else {
-
         }
 
         return user;
