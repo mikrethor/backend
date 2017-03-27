@@ -13,6 +13,6 @@ public interface DaySumupRepository extends CrudRepository<DaySumup, Long> {
 	List<DaySumup> findSumupByChildAndDaycare(@Param("idDaycare") Long idDaycare, @Param("idChild") Long idChild);
 
 	@Query("SELECT ds " + "FROM DaySumup ds " + "WHERE ds.child.id=:idChild AND ds.child.daycare.id=:idDaycare AND ds.day=:dateSumup")
-	List<DaySumup> findSumupByChildAndDaycareAndDate(@Param("idDaycare") Long idDaycare, @Param("idChild") Long idChild, @Param("dateSumup") Date dateSumup);
+	DaySumup findSumupByChildAndDaycareAndDate(@Param("idDaycare") Long idDaycare, @Param("idChild") Long idChild, @Param("dateSumup") Date dateSumup);
 
 }

@@ -2,6 +2,7 @@ package fr.ablx.daycare.controllers;
 
 import fr.ablx.daycare.errors.DayCareException;
 import fr.ablx.daycare.jpa.*;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -24,16 +26,12 @@ public class SumupController extends AbstractController<DaySumup> {
     public List<DaySumup> getSumups(@PathVariable Long idDaycare, @PathVariable Long idChild) {
 
 
-
         return sumupRepo.findSumupByChildAndDaycare(idDaycare, idChild);
     }
 
     @RequestMapping("/daycares/{idDaycare}/childs/{idChild}/sumups/day/{sumupDay}")
-    public DaySumup getSumup(@PathVariable Long idDaycare, @PathVariable Long idChild, @PathVariable String sumupDay) {
-
-
-
-        return sumupRepo.findOne(1L);
+    public DaySumup getSumup(@PathVariable Long idDaycare, @PathVariable Long idChild, @PathVariable String sumupDay) throws ParseException {
+        return sumupRepo.findSumupByChildAndDaycareAndDate(idDaycare, idChild, DateUtils.parseDate(sumupDay, "yyyy-MM-dd"));
     }
 
     @RequestMapping("/moods")
