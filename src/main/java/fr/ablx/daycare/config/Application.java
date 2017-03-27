@@ -23,7 +23,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.sql.DataSource;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -106,57 +105,16 @@ public class Application {
                                   DayCareRepository dayCareRepository, UserRepository userRepository, AdminRepository adminRepository) {
         return (args) -> {
 
-            Daycare daycare = dayCareRepository.findOne(1L);
-
-            Child louis = childRepository.findOne(2L);
-            Child arthur = childRepository.findOne(1L);
-
-            DaySumup daySumup1 = new DaySumup();
-            daySumup1.setMood(Mood.BAD);
-            daySumup1.setSleep(Sleep.GOOD);
-            daySumup1.setAppetite(Appetite.GOOD);
-            daySumup1.setComment("Best day ever Arthur");
-            daySumup1.setDay(new Date());
-            daySumup1.setChild(arthur);
-
-            DaySumup daySumup2 = new DaySumup();
-            daySumup2.setMood(Mood.BAD);
-            daySumup2.setSleep(Sleep.GOOD);
-            daySumup2.setAppetite(Appetite.GOOD);
-            daySumup2.setComment("Best day ever Louis");
-            daySumup2.setDay(new Date());
-
-            daySumup2.setChild(louis);
-
-            daySumup1 = daySumupRepository.save(daySumup1);
-            daySumup2 = daySumupRepository.save(daySumup2);
-
-            List<DaySumup> sumupsArthur = new ArrayList<>();
-
-            sumupsArthur.add(daySumup1);
-
-            List<DaySumup> sumupsLouis = new ArrayList<>();
-
-            sumupsLouis.add(daySumup2);
-            arthur.setDaySumups(sumupsArthur);
-            louis.setDaySumups(sumupsLouis);
-
-            arthur = childRepository.save(arthur);
-            louis = childRepository.save(louis);
-
             Parent parent1 = parentRepository.findOne(1L);
             Parent parent2 = parentRepository.findOne(2L);
 
             List<Child> enfants = new ArrayList<>();
 
-            enfants.add(arthur);
-            enfants.add(louis);
+            enfants.add(childRepository.findOne(1L));
+            enfants.add(childRepository.findOne(2L));
 
             parent1.setChildren(enfants);
             parent2.setChildren(enfants);
-
-            parent1.setDaycare(daycare);
-            parent2.setDaycare(daycare);
 
             parentRepository.save(parent1);
             parentRepository.save(parent2);

@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-/**
- * Basic Controller which is called for unhandled errors
- */
 @RestController
 public class AppErrorController implements ErrorController {
 
