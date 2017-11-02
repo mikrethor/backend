@@ -48,9 +48,7 @@ public class LoginControllerTest {
     @Test
     public void login() throws Exception {
 
-        Credentials user = new Credentials();
-        user.setLogin("test@parent");
-        user.setPassword("test");
+        Credentials user = new Credentials("test@parent","test");
 
         String json = new Gson().toJson(user);
 
